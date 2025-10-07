@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PredictionMart - Trade the Future</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #e4e4e7;
+            background: #09090b;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(9, 9, 11, 0.8);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fafafa;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .hero {
+            padding: 140px 0 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fafafa 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #a1a1aa;
+            max-width: 640px;
+            margin: 0 auto 48px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        }
+
+        .section h2 {
+            font-size: 48px;
+            margin-bottom: 72px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #fafafa 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mission-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #a1a1aa;
+            text-align: center;
+        }
+
+        .personas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .persona-card {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .persona-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .persona-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .persona-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .persona-card h3 {
+            font-size: 22px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #fafafa;
+        }
+
+        .persona-card p {
+            color: #a1a1aa;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .content-box {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step {
+            padding: 40px;
+            margin-bottom: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(8px);
+        }
+
+        .step h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #fafafa;
+        }
+
+        .step p {
+            color: #a1a1aa;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            margin-right: 12px;
+            font-size: 14px;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .example-box {
+            background: rgba(99, 102, 241, 0.05);
+            padding: 24px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-size: 15px;
+            line-height: 1.7;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .example-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #fafafa;
+        }
+
+        .widget-container {
+            padding: 48px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            margin: 48px 0;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .widget-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .widget-title {
+            font-size: 28px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #fafafa;
+            position: relative;
+            z-index: 1;
+        }
+
+        .widget-description {
+            text-align: center;
+            color: #a1a1aa;
+            margin-bottom: 32px;
+            font-size: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #marketChart {
+            width: 100%;
+            height: 360px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            margin: 24px 0;
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .simulate-button {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 14px 36px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: block;
+            margin: 24px auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .simulate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .price-display {
+            text-align: center;
+            color: #a1a1aa;
+            margin-top: 16px;
+            font-size: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 48px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 80px 0;
+            text-align: center;
+            color: #71717a;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        .calculator-form {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #fafafa;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.02);
+            color: #fafafa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 32px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .result-box h3 {
+            font-size: 36px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fafafa;
+        }
+
+        .result-box p {
+            font-size: 15px;
+            color: #a1a1aa;
+            margin-bottom: 8px;
+        }
+
+        .result-box strong {
+            color: #fafafa;
+            font-weight: 600;
+        }
+
+        .intro-text {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 48px;
+            color: #a1a1aa;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .example-card {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+        }
+
+        .example-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .example-card h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #fafafa;
+        }
+
+        .example-card p {
+            color: #a1a1aa;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .example-card p strong {
+            color: #fafafa;
+            font-weight: 600;
+        }
+
+        .glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(60px);
+        }
+
+        .glow-1 { top: -200px; left: -200px; }
+        .glow-2 { bottom: -200px; right: -200px; background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%); }
+    </style>
+</head>
+<body>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">PredictionMart</div>
+            <a href="#" class="cta-button">Get Started</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Trade the Future</h1>
+            <p>Harness the wisdom of the crowd. Buy and sell shares on real-world events in tech, economics, and geopolitics.</p>
+            <a href="#" class="cta-button">Start Trading</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <div class="mission-text">
+                PredictionMart is democratizing access to prediction markets across Asia. We empower individuals and institutions to make informed decisions by aggregating collective intelligence through market-based forecasting. Launching from Dubai and Singapore, we're building the most transparent, liquid, and accessible platform for trading on the outcomes of future events.
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Who We Serve</h2>
+            <div class="personas">
+                <div class="persona-card">
+                    <h3>The Strategic Analyst</h3>
+                    <p><strong>Profile:</strong> Corporate strategists, consultants, and business intelligence professionals</p>
+                    <p><strong>Use Case:</strong> Gauging market sentiment on regulatory changes, tech trends, and competitive moves to inform strategic planning</p>
+                </div>
+                <div class="persona-card">
+                    <h3>The Retail Investor</h3>
+                    <p><strong>Profile:</strong> Tech-savvy millennials and Gen Z professionals in urban India and Southeast Asia</p>
+                    <p><strong>Use Case:</strong> Diversifying portfolios with alternative assets while engaging with current events in an innovative way</p>
+                </div>
+                <div class="persona-card">
+                    <h3>The Research Enthusiast</h3>
+                    <p><strong>Profile:</strong> Academics, journalists, and policy researchers</p>
+                    <p><strong>Use Case:</strong> Using prediction markets as real-time data sources for understanding public expectations and probability assessments</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>What is a Prediction Market?</h2>
+            <div class="content-box">
+                <p class="intro-text">
+                    A prediction market is a financial market designed to aggregate information and beliefs about future events. Participants buy and sell contracts that pay out based on the outcome of specified events.
+                </p>
+
+                <div class="step">
+                    <h3><span class="step-number">1</span>Event Definition</h3>
+                    <p>Each market is based on a specific, verifiable event with clear resolution criteria. Events can be binary (Yes/No) or have multiple outcomes.</p>
+                    <div class="example-box">
+                        <strong>Examples</strong>
+                        "Will Apple release an AI-powered iPhone by June 2025?"<br>
+                        "Will India's GDP growth exceed 7% in 2025?"<br>
+                        "Will Bitcoin reach $100,000 before December 2025?"
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span>Price = Probability</h3>
+                    <p>Share prices range from $0.00 to $1.00, representing the market's collective probability estimate. A "Yes" share trading at $0.65 means the market believes there's a 65% chance the event will occur.</p>
+                    <div class="example-box">
+                        <strong>Example</strong>
+                        If a market shows $0.22 for "Yes": The crowd believes there's a 22% chance the event will happen.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">3</span>Trading & Profit</h3>
+                    <p>Buy low, sell high—or hold until settlement. If you believe an event is more likely than the current price suggests, you buy "Yes" shares. If you think it's less likely, you buy "No" shares or sell "Yes" shares.</p>
+                    <div class="example-box">
+                        <strong>Example</strong>
+                        You buy 100 "Yes" shares at $0.30 each ($30 total). The event happens. You receive $100 (100 shares × $1). Your profit: $70.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">4</span>Settlement</h3>
+                    <p>When the event occurs or the deadline passes, contracts are settled. "Yes" shares pay $1.00 if the outcome is true, $0.00 if false. "No" shares pay $1.00 if false, $0.00 if true.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>How to Participate</h2>
+            <div class="content-box">
+                <div class="step">
+                    <h3><span class="step-number">1</span>Sign Up</h3>
+                    <p>Create your account in minutes with email verification and KYC compliance for regulatory standards.</p>
+                </div>
+                <div class="step">
+                    <h3><span class="step-number">2</span>Deposit Funds</h3>
+                    <p>Add funds via bank transfer, UPI, credit card, or cryptocurrency. Minimum deposit: $10 USD equivalent.</p>
+                </div>
+                <div class="step">
+                    <h3><span class="step-number">3</span>Browse Markets</h3>
+                    <p>Explore hundreds of markets across tech, economics, geopolitics, and more. Use filters to find events that match your expertise.</p>
+                </div>
+                <div class="step">
+                    <h3><span class="step-number">4</span>Buy Shares</h3>
+                    <p>Choose your position (Yes or No), enter the number of shares, and confirm your trade. Your shares appear instantly in your portfolio.</p>
+                </div>
+                <div class="step">
+                    <h3><span class="step-number">5</span>Monitor & Trade</h3>
+                    <p>Watch prices move in real-time. Sell your shares early to lock in profits or cut losses, or hold until settlement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Example Transactions</h2>
+            <div class="content-box">
+                <div class="example-card">
+                    <h3>Tech Product Launch</h3>
+                    <p><strong>Event:</strong> "Will Apple announce a foldable iPhone in 2025?"</p>
+                    <p><strong>Initial Price:</strong> Yes shares at $0.15 (15% probability)</p>
+                    <p><strong>Your Action:</strong> You've read patent filings and supply chain reports. You believe it's underpriced. You buy 200 Yes shares at $0.15 each = $30 investment.</p>
+                    <p><strong>Price Movement:</strong> After credible leaks from a reliable source, the price rises to $0.45.</p>
+                    <p><strong>Option A - Sell Early:</strong> You sell at $0.45 = 200 × $0.45 = $90. Profit: $60 (200% return)</p>
+                    <p><strong>Option B - Hold to Settlement:</strong> Apple announces the foldable iPhone. Yes shares pay $1.00. You receive $200. Profit: $170 (567% return)</p>
+                </div>
+
+                <div class="example-card">
+                    <h3>Economic Indicator</h3>
+                    <p><strong>Event:</strong> "Will India's Q4 2025 GDP growth exceed 7.5%?"</p>
+                    <p><strong>Initial Price:</strong> Yes shares at $0.70 (70% probability)</p>
+                    <p><strong>Your Analysis:</strong> Economic data suggests cooling growth. You think the market is overconfident. You buy 150 No shares at $0.30 each = $45 investment.</p>
+                    <p><strong>Outcome:</strong> Official GDP data shows 7.2% growth—below the 7.5% threshold.</p>
+                    <p><strong>Settlement:</strong> Your No shares pay $1.00 each = 150 × $1.00 = $150. Profit: $105 (233% return)</p>
+                </div>
+
+                <div class="example-card">
+                    <h3>Geopolitical Event</h3>
+                    <p><strong>Event:</strong> "Will a major trade agreement be signed between India and the EU by June 2025?"</p>
+                    <p><strong>Initial Price:</strong> Yes shares at $0.55 (55% probability)</p>
+                    <p><strong>Your Position:</strong> You buy 100 Yes shares at $0.55 = $55 investment.</p>
+                    <p><strong>News Impact:</strong> Negotiations stall over agricultural subsidies. Price drops to $0.25.</p>
+                    <p><strong>Your Decision:</strong> You sell early at $0.25 to minimize losses = 100 × $0.25 = $25. Loss: $30 (but you preserved $25 of your capital instead of losing it all)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Interactive Tools</h2>
+            
+            <div class="widget-container">
+                <h3 class="widget-title">Market Simulator</h3>
+                <p class="widget-description">
+                    Watch a simulated prediction market in real-time. Each click adds a new price point.
+                </p>
+                <canvas id="marketChart"></canvas>
+                <button class="simulate-button" onclick="addDataPoint()">Add New Price Point</button>
+                <p class="price-display">
+                    Current Price: $<span id="currentPrice">0.45</span> (<span id="currentPercent">45</span>% probability)
+                </p>
+            </div>
+
+            <div class="widget-container">
+                <h3 class="widget-title">Payoff Calculator</h3>
+                <p class="widget-description">
+                    Calculate your potential returns before you trade.
+                </p>
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="sharePrice">Share Price ($0.00 - $1.00)</label>
+                        <input type="number" id="sharePrice" min="0" max="1" step="0.01" value="0.35" oninput="calculatePayoff()">
+                    </div>
+                    <div class="form-group">
+                        <label for="investment">Investment Amount ($)</label>
+                        <input type="number" id="investment" min="1" step="1" value="100" oninput="calculatePayoff()">
+                    </div>
+                    <div class="result-box" id="resultBox">
+                        <h3 id="sharesOwned">285 Shares</h3>
+                        <p>If your prediction is correct, you'll receive: <strong id="totalPayout">$285.00</strong></p>
+                        <p>Your profit will be: <strong id="netProfit">$185.00</strong></p>
+                        <p style="margin-top: 12px;">ROI: <strong id="roi">185%</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Learn More</h2>
+            <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/1O_BenficgE" allowfullscreen></iframe>
+</div>
+            <p style="text-align: center; margin-top: 24px; color: #71717a; font-size: 15px;">
+                Introduction to prediction markets and their potential
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 PredictionMart. Launching from Dubai & Singapore.</p>
+            <p>Trade responsibly. Past performance does not guarantee future results.</p>
+        </div>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('marketChart');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 360;
+
+        let dataPoints = [0.45, 0.47, 0.44, 0.46, 0.48, 0.45, 0.43, 0.44, 0.46, 0.45];
+        
+        function drawChart() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const y = (canvas.height / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            
+            ctx.fillStyle = 'rgba(161, 161, 170, 0.6)';
+            ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 10; i++) {
+                const y = (canvas.height / 10) * i;
+                const value = (1 - i / 10).toFixed(1);
+                ctx.fillText(value, canvas.width - 8, y + 4);
+            }
+            
+            if (dataPoints.length < 2) return;
+            
+            const pointSpacing = canvas.width / (dataPoints.length - 1);
+            
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            gradient.addColorStop(0, '#6366f1');
+            gradient.addColorStop(1, '#8b5cf6');
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = 'rgba(99, 102, 241, 0.5)';
+            ctx.beginPath();
+            
+            for (let i = 0; i < dataPoints.length; i++) {
+                const x = i * pointSpacing;
+                const y = canvas.height - (dataPoints[i] * canvas.height);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            
+            for (let i = 0; i < dataPoints.length; i++) {
+                const x = i * pointSpacing;
+                const y = canvas.height - (dataPoints[i] * canvas.height);
+                
+                ctx.fillStyle = '#8b5cf6';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = 'rgba(139, 92, 246, 0.8)';
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.shadowBlur = 0;
+        }
+        
+        function addDataPoint() {
+            const lastPrice = dataPoints[dataPoints.length - 1];
+            const change = (Math.random() - 0.5) * 0.1;
+            let newPrice = lastPrice + change;
+            
+            newPrice = Math.max(0.05, Math.min(0.95, newPrice));
+            
+            dataPoints.push(newPrice);
+            
+            if (dataPoints.length > 20) {
+                dataPoints.shift();
+            }
+            
+            drawChart();
+            
+            document.getElementById('currentPrice').textContent = newPrice.toFixed(2);
+            document.getElementById('currentPercent').textContent = Math.round(newPrice * 100);
+        }
+        
+        function calculatePayoff() {
+            const price = parseFloat(document.getElementById('sharePrice').value) || 0;
+            const investment = parseFloat(document.getElementById('investment').value) || 0;
+            
+            if (price <= 0 || investment <= 0) {
+                return;
+            }
+            
+            const shares = Math.floor(investment / price);
+            const totalPayout = shares * 1.00;
+            const netProfit = totalPayout - investment;
+            const roi = ((netProfit / investment) * 100).toFixed(0);
+            
+            document.getElementById('sharesOwned').textContent = shares + ' Shares';
+            document.getElementById('totalPayout').textContent = '$' + totalPayout.toFixed(2);
+            document.getElementById('netProfit').textContent = '$' + netProfit.toFixed(2);
+            document.getElementById('roi').textContent = roi + '%';
+        }
+        
+        drawChart();
+        calculatePayoff();
+    </script>
+</body>
+</html>
